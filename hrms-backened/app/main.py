@@ -15,7 +15,12 @@ app = FastAPI(title="HRMS Lite Backend")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://hrms-frontend-o4kzvlsn1-akash-pandeys-projects-17f112c3.vercel.app",
+        "http://localhost:3000",   # optional (local dev)
+        "http://localhost:5173",   # optional (local dev)
+    ],
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -53,4 +58,5 @@ def add_attendance(emp_id: str, data: AttendanceCreate, db: Session = Depends(ge
 def view_attendance(emp_id: str, db: Session = Depends(get_db)):
     emp_id=emp_id.strip().lower()
     return get_attendance(db, emp_id)
+
 
